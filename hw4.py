@@ -98,8 +98,12 @@ class Stall:
         else:
             self.inventory[name] = quantity
     
+    def compute_cost(self, quantity):
+        return quantity * self.cost
     
-        
+    def __str__(self):
+        return "Hello, we are " + self.name + ". This is the current menu " + self.inventory.keys() + ". We charge $" +str(self.cost) +" per item. We have $" + str(self.earnings) + " in total."
+
 
 
 class TestAllMethods(unittest.TestCase):
@@ -206,7 +210,20 @@ class TestAllMethods(unittest.TestCase):
 ### Write main function
 def main():
     #Create different objects 
-
+    lunchinv ={"Burger": 15, "Hot Dog": 18, "Sandwich": 12}
+    snacksinv = {"Chips": 30, "Cookies": 20, "Crackers": 10, "Pita Wedges and Hummus": 9}
+    dessertinv = {"Cake": 5, "Ice Cream": 20, "Froyo": 8}
+    j = Customer("J", 50)
+    madison = Customer("Madison", 1000)
+    terrence = Customer("Terrence", 10)
+    lunch = Stall("Lunch", lunchinv)
+    snacks = Stall("Snacks", snacksinv, 70, 5)
+    dessert = Stall("Dessert", dessertinv, cost = 6)
+    yurika = Cashier("Yurika", [lunch])
+    martez = Cashier("Martez", [snacks, dessert])
+    j.validate_order(martez,snacks,"Cookies",2)
+    madison.validate_order(yurika,lunch,"Sandwich", 1)
+    terrence.validate_order(martez,dessert,"Cake", 2)
     #Try all cases in the validate_order function
     #Below you need to have *each customer instance* try the four cases
     #case 1: the cashier does not have the stall 
